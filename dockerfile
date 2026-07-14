@@ -1,6 +1,6 @@
 FROM rockylinux:9
 
-ARG AGENT_VERSION      # теперь версия задаётся при сборке
+ARG AGENT_VERSION
 ENV AGENT_VERSION=${AGENT_VERSION}
 
 RUN dnf update -y && \
@@ -11,14 +11,12 @@ RUN dnf update -y && \
 ENV LANG=en_US.utf8
 ENV LC_ALL=en_US.utf8
 
-# Скачиваем и устанавливаем Агент, используя переменную версии
 RUN wget -q -O /opt/CyberProtect_Agent.bin \
         "https://eu-cloud.acronis.com/download/u/baas/4.0/${AGENT_VERSION}/CyberProtect_AgentForLinux_x86_64.bin" && \
     chmod +x /opt/CyberProtect_Agent.bin && \
     /opt/CyberProtect_Agent.bin -a --skip-prereq-check --skip-registration --id="BackupAndRecoveryAgent" && \
     rm -f /opt/CyberProtect_Agent.bin
 
-# Создаем эталонный шаблон чистой установки
 RUN mkdir -p /opt/acronis_template && \
     cp -rp /etc/Acronis /opt/acronis_template/etc && \
     cp -rp /var/lib/Acronis /opt/acronis_template/var && \
