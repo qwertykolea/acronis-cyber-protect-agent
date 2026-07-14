@@ -1,0 +1,3 @@
+https://eu-cloud.acronis.com
+https://us-cloud.acronis.com
+https://au-cloud.acronis.com
