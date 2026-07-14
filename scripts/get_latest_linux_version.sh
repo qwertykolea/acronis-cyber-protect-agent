@@ -18,12 +18,28 @@ while IFS= read -r mirror || [ -n "$mirror" ]; do
     echo "Checking $mirror..." >&2
 
     listing=$(curl -s -L -A "Mozilla/5.0" "$mirror$BASE_PATH/")
-    [ -z "$listing" ] && continue
+    echo "--- LISTING START ---" >&2
+    echo "$listing" | head -c 1000 >&2
+    echo -e "\n--- LISTING END ---" >&2
 
-    # Извлекаем все версии (числа с точками) из ссылок
+    # Извлекаем версии (попробуем несколько паттернов)
     versions=$(echo "$listing" | grep -oP '(?<=href=")[^"]*[0-9]+\.[0-9]+\.[0-9]+/' | sed 's:/*$::' | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | sort -u)
+    if [ -z "$versions" ]; then
+        versions=$(echo "$listing" | grep -oP '/[0-9]+\.[0-9]+\.[0-9]+/' | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | sort -u)
+    fi
+    if [ -z "$versions" ]; then
+        # Попробуем просто найти числа с точками в тексте
+        versions=$(echo "$listing" | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | sort -u)
+    fi
+
+    if [ -n "$versions" ]; then
+        echo "Found versions: $versions" >&2
+    else
+        echo "No versions found in listing" >&2
+    fi
 
     for v in $versions; do
+        echo "  Testing version $v..." >&2
         if curl -s -I -L -A "Mozilla/5.0" --fail "$mirror$BASE_PATH/$v/$AGENT_FILE" >/dev/null 2>&1; then
             echo "$v" >> "$TMP_FILE"
             echo "  Found version $v" >&2
