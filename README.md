@@ -22,6 +22,8 @@ docker build -t acronis-cyber-protect-agent:latest \
   --build-arg MIRROR_URL=https://eu-cloud.acronis.com \
   .
   ```
+
+---
 ## Register
 ```bash
 docker exec -it acronis_tenant1 /usr/lib/Acronis/RegisterAgentTool/RegisterAgent -a https://eu-cloud.acronis.com --token XXXX-XXXX-XXXX -o register -t cloud
