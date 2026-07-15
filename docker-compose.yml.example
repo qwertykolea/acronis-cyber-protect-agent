@@ -1,0 +1,33 @@
+x-resources: &default-resources
+  deploy:
+    resources:
+      limits:
+        cpus: '0.4'
+        memory: 300M
+
+services:
+  acronis-tenant1:
+    <<: *default-resources
+    image: ghcr.io/qwertykolea/acronis-cyber-protect-agent:latest
+    container_name: acronis_tenant1
+    hostname: siem_log_tenant1
+    privileged: true
+    restart: always
+    volumes:
+      - /opt/acronis_volumes/tenant1/etc:/etc/Acronis
+      - /opt/acronis_volumes/tenant1/var:/var/lib/Acronis
+      - /opt/acronis_volumes/tenant1/opt_var:/opt/acronis/var
+      - /opt/acronis_volumes/tenant1/siem:/var/log/siem
+
+  acronis-tenant2:
+    <<: *default-resources
+    image: ghcr.io/qwertykolea/acronis-cyber-protect-agent:latest
+    container_name: acronis_tenant2
+    hostname: siem_log_tenant2
+    privileged: true
+    restart: always
+    volumes:
+      - /opt/acronis_volumes/tenant2/etc:/etc/Acronis
+      - /opt/acronis_volumes/tenant2/var:/var/lib/Acronis
+      - /opt/acronis_volumes/tenant2/opt_var:/opt/acronis/var
+      - /opt/acronis_volumes/tenant2/siem:/var/log/siem
