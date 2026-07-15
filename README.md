@@ -19,7 +19,7 @@ Dockerized Acronis Cyber Protect Agent for Linux – designed for multi‑tenant
 ```bash
 docker build -t acronis-cyber-protect-agent:latest \
   --build-arg AGENT_VERSION=26.6.42659 \
-  --build-arg MIRROR_URL=https://it01-cloud.acronis.com \
+  --build-arg MIRROR_URL=https://eu-cloud.acronis.com \
   .
   ```
 ## Register
