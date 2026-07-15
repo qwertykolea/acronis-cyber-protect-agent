@@ -32,4 +32,5 @@ docker exec -it acronis_tenant2 /usr/lib/Acronis/RegisterAgentTool/RegisterAgent
 
 ---
 ## Beta mirror
-# https://mc-beta-cloud.acronis.com
+```bash
+https://mc-beta-cloud.acronis.com
