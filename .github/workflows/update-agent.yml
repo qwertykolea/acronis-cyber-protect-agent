@@ -70,9 +70,16 @@ jobs:
       - name: Update version.txt
         if: steps.check.outputs.new == 'true'
         run: |
-          echo "${{ steps.latest.outputs.version }}" > version.txt
           git config user.name github-actions
           git config user.email github-actions@github.com
+          
+          # Записываем версию и делаем коммит локально
+          echo "${{ steps.latest.outputs.version }}" > version.txt
           git add version.txt
           git commit -m "Update Acronis agent version to ${{ steps.latest.outputs.version }}"
+          
+          # Затягиваем свежие изменения из репозитория, чтобы избежать конфликта
+          git pull --rebase origin ${{ github.ref_name }}
+          
+          # Теперь пуш пройдет без проблем
           git push
