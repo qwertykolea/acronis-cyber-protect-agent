@@ -76,7 +76,6 @@ https://li01-cloud.acronis.com
 https://mx01-cloud.acronis.com
 https://my01-cloud.acronis.com
 https://no01-cloud.acronis.com
-https://nz01-cloud.acronis.com
 https://pl01-cloud.acronis.com
 https://pt01-cloud.acronis.com
 https://se01-cloud.acronis.com
